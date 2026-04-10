@@ -240,7 +240,7 @@ export default function ModelsLesson({ onNext, onBack }) {
               backgroundColor: '#253746', color: '#f2e8da',
             }}
           >
-            NEXT: QUICK QUIZ →
+            NEXT: MANAGING CONNECTORS →
           </button>
         </div>
       </div>

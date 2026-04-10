@@ -1,4 +1,4 @@
-export default function ConnectorsGuide({ onBack }) {
+export default function ConnectorsGuide({ onNext, onBack }) {
 
   const Step = ({ num, title, children, mockup }) => (
     <div style={{ marginBottom: 20 }}>
@@ -110,7 +110,7 @@ export default function ConnectorsGuide({ onBack }) {
             padding: '3px 10px', borderRadius: 2, marginBottom: 12,
             fontFamily: "'Barlow Condensed', sans-serif",
           }}>
-            Quick Reference
+            Bonus: Quick Reference
           </span>
           <h2 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
@@ -239,12 +239,23 @@ export default function ConnectorsGuide({ onBack }) {
             onClick={onBack}
             className="transition-all hover:opacity-80 active:scale-95"
             style={{
-              flex: 1, padding: '11px 20px', borderRadius: 4, cursor: 'pointer',
+              padding: '11px 20px', borderRadius: 4, cursor: 'pointer',
               fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, letterSpacing: '0.06em',
               backgroundColor: 'transparent', color: '#253746', border: '2px solid rgba(37,55,70,0.2)',
             }}
           >
-            ← BACK TO SUMMARY
+            ← BACK
+          </button>
+          <button
+            onClick={onNext}
+            className="transition-all hover:opacity-90 active:scale-95"
+            style={{
+              flex: 1, padding: '11px 20px', borderRadius: 4, border: 'none', cursor: 'pointer',
+              fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, letterSpacing: '0.06em',
+              backgroundColor: '#253746', color: '#f2e8da',
+            }}
+          >
+            NEXT: QUICK QUIZ →
           </button>
         </div>
       </div>

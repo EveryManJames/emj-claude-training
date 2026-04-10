@@ -29,9 +29,9 @@ export default function App() {
       {screen === 2 && <ContextLesson onNext={goNext} onBack={goBack} />}
       {screen === 3 && <TipsLesson onNext={goNext} onBack={goBack} />}
       {screen === 4 && <ModelsLesson onNext={goNext} onBack={goBack} />}
-      {screen === 5 && <Quiz onNext={goNext} onBack={goBack} />}
-      {screen === 6 && <Complete onRestart={restart} onConnectors={() => setScreen(7)} />}
-      {screen === 7 && <ConnectorsGuide onBack={() => setScreen(6)} />}
+      {screen === 5 && <ConnectorsGuide onNext={goNext} onBack={goBack} />}
+      {screen === 6 && <Quiz onNext={goNext} onBack={goBack} />}
+      {screen === 7 && <Complete onRestart={restart} />}
     </div>
   );
 }
