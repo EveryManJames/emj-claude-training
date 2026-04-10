@@ -64,6 +64,22 @@ const TIPS = [
       text: 'Write a 3-part email sequence for launching our new aluminum-free deodorant:\n1. Subject line options (5)\n2. Launch email body (150 words)\n3. Follow-up email (100 words, urgency-focused)',
       note: 'One conversation handles the full task — context is shared efficiently.'
     }
+  },
+  {
+    id: 'files',
+    icon: '📁',
+    title: 'Be Selective About What Claude Reads',
+    color: '#884933',
+    bad: {
+      label: '❌ Sending Claude on a File Hunt',
+      text: 'Search my Google Drive for everything related to the 2023 fall campaign and give me a summary.',
+      note: 'Claude may read dozens of documents — tens of thousands of tokens — before writing a single word. A full Drive scan of 20 docs ≈ 70,000 tokens.'
+    },
+    good: {
+      label: '✅ You Find It, Claude Thinks About It',
+      text: 'I pulled up the Q3 2023 Fall Campaign Brief from Drive. Here\'s the relevant section:\n\n"[paste the 2–3 paragraphs that actually matter]"\n\nSummarize the main campaign goals in 3 bullet points.',
+      note: 'You do the finding, Claude does the thinking. Pasting a relevant excerpt instead of triggering a file search can save 50× or more tokens.'
+    }
   }
 ];
 
@@ -84,7 +100,7 @@ export default function TipsLesson({ onNext, onBack }) {
             Lesson 3 of 4
           </span>
           <h2 className="text-3xl font-black mb-2" style={{ color: '#253746' }}>
-            4 Tips to Use Claude Smarter 💡
+            5 Tips to Use Claude Smarter 💡
           </h2>
           <p style={{ color: '#253746', opacity: 0.75 }}>
             Compare the "meh" approach vs. the smart approach. Tap each card to flip between them.

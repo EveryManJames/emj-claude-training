@@ -46,6 +46,17 @@ const QUESTIONS = [
     explanation: "Batching related tasks in one conversation is much more efficient. You set the context once and Claude handles all three tasks together."
   },
   {
+    q: "You need to find feedback on EMJ's new deodorant from the past year. You ask Claude to scan your Gmail and read every email mentioning 'deodorant' — about 80 emails. What's the real concern here?",
+    options: [
+      "Gmail integration only works for the last 30 days.",
+      "Reading 80 emails (~350 tokens each) burns ~28,000 tokens — the same as writing nearly 1,000 product descriptions — before Claude types a single word back.",
+      "Claude will reply too slowly when reading emails.",
+      "You'd need a paid Gmail add-on for this to work."
+    ],
+    correct: 1,
+    explanation: "File and email searches are the hidden budget killers. A single Gmail scan can cost more tokens than weeks of normal prompts. Find the relevant emails yourself and paste only the key ones — or just the quotes that matter."
+  },
+  {
     q: "You want Claude to always know EMJ's brand voice without having to explain it every single time. What's the best solution?",
     options: [
       "Start every message with a 200-word brand description.",

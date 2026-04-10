@@ -31,6 +31,45 @@ function tokenize(text) {
   return tokens;
 }
 
+const REAL_WORLD_DATA = [
+  {
+    label: 'Your prompt',
+    description: '"Write a product description for Cedar Body Wash"',
+    tokens: 30,
+    color: '#79dbd4',
+  },
+  {
+    label: "Claude's reply",
+    description: '60-word product description',
+    tokens: 220,
+    color: '#79dbd4',
+  },
+  {
+    label: '1 typical work email',
+    description: 'A standard email (~250 words)',
+    tokens: 350,
+    color: '#ffc56e',
+  },
+  {
+    label: '1 Google Drive doc',
+    description: '10-page strategy or campaign brief',
+    tokens: 3500,
+    color: '#ffc56e',
+  },
+  {
+    label: 'Gmail search: 50 emails',
+    description: 'Claude reads every matching result to find what you need',
+    tokens: 17500,
+    color: '#884933',
+  },
+  {
+    label: 'Drive scan: 20 docs',
+    description: '"Find anything about our 2023 campaign"',
+    tokens: 70000,
+    color: '#884933',
+  },
+];
+
 const EXAMPLES = [
   {
     label: "A simple question",
@@ -151,11 +190,51 @@ export default function TokenLesson({ onNext, onBack }) {
           </div>
         </div>
 
+        {/* Real-World Scale */}
+        <div className="rounded-2xl overflow-hidden mb-6 shadow-sm" style={{ backgroundColor: 'white' }}>
+          <div className="px-5 py-4 border-b" style={{ borderColor: '#e8ddd0' }}>
+            <p className="font-bold" style={{ color: '#253746' }}>📊 Your prompt is just the tip of the iceberg</p>
+            <p className="text-sm mt-1" style={{ color: 'rgba(37,55,70,0.65)' }}>
+              The real token cost happens when Claude has to <em>read through your files</em> — emails, documents, entire Drive folders.
+              Your prompt is a rounding error compared to that.
+            </p>
+          </div>
+          <div className="px-5 py-5">
+            {REAL_WORLD_DATA.map((item, i) => (
+              <div key={i} className="mb-4 last:mb-0">
+                <div className="flex justify-between items-baseline mb-0.5">
+                  <span className="text-sm font-semibold" style={{ color: '#253746' }}>{item.label}</span>
+                  <span className="text-xs font-mono font-bold" style={{ color: item.color }}>
+                    ~{item.tokens.toLocaleString()} tokens
+                  </span>
+                </div>
+                <p className="text-xs mb-1.5" style={{ color: 'rgba(37,55,70,0.5)' }}>{item.description}</p>
+                <div className="w-full rounded-full h-2" style={{ backgroundColor: '#f2e8da' }}>
+                  <div
+                    className="h-2 rounded-full"
+                    style={{
+                      width: `${Math.min(100, Math.max(3, (Math.log10(item.tokens) / Math.log10(70000)) * 100))}%`,
+                      backgroundColor: item.color,
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="px-5 py-4" style={{ backgroundColor: '#884933' }}>
+            <p className="text-sm font-bold" style={{ color: '#f2e8da' }}>
+              ⚠️ Asking Claude to search 50 Gmail threads costs{' '}
+              <span style={{ color: '#ffc56e' }}>~580× more tokens than your prompt</span>
+              {' '}— before it writes a single word back to you.
+            </p>
+          </div>
+        </div>
+
         {/* Key takeaway */}
         <div className="rounded-2xl p-5 mb-8" style={{ backgroundColor: '#4e5a31', color: '#f2e8da' }}>
           <p className="font-bold mb-1">💡 Key Takeaway</p>
           <p style={{ opacity: 0.9 }}>
-            Both your message <em>and</em> Claude's reply cost tokens. Shorter, more specific messages = lower cost + better answers.
+            Both your message <em>and</em> Claude's reply cost tokens — but the biggest hidden cost is what Claude has to <em>read</em>. Don't send Claude on a file hunt when you can paste the relevant piece yourself.
           </p>
         </div>
 
