@@ -7,7 +7,7 @@ const TIPS = [
   { icon: '📏', tip: "Ask for shorter outputs when you don't need a novel." },
 ];
 
-export default function Complete({ onRestart }) {
+export default function Complete({ onRestart, onConnectors }) {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#253746' }}>
       <div style={{ height: 3, background: 'linear-gradient(90deg, #79dbd4 0%, #ffc56e 50%, #884933 100%)', flexShrink: 0 }} />
@@ -59,6 +59,17 @@ export default function Complete({ onRestart }) {
           </div>
 
           <div className="fade-up delay-3" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <button
+              onClick={onConnectors}
+              className="transition-all hover:opacity-90 active:scale-95"
+              style={{
+                width: '100%', padding: '13px 20px', borderRadius: 4, border: 'none', cursor: 'pointer',
+                fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 15, letterSpacing: '0.06em',
+                backgroundColor: 'rgba(255,255,255,0.08)', color: '#f2e8da',
+              }}
+            >
+              🔌 HOW TO MANAGE CONNECTORS →
+            </button>
             <button
               onClick={onRestart}
               className="transition-all hover:opacity-70"

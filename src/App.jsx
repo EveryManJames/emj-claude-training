@@ -7,8 +7,9 @@ import TipsLesson from './screens/TipsLesson.jsx';
 import ModelsLesson from './screens/ModelsLesson.jsx';
 import Quiz from './screens/Quiz.jsx';
 import Complete from './screens/Complete.jsx';
+import ConnectorsGuide from './screens/ConnectorsGuide.jsx';
 
-const TOTAL_SCREENS = 7;
+const TOTAL_SCREENS = 8;
 
 export default function App() {
   const [screen, setScreen] = useState(0);
@@ -29,7 +30,8 @@ export default function App() {
       {screen === 3 && <TipsLesson onNext={goNext} onBack={goBack} />}
       {screen === 4 && <ModelsLesson onNext={goNext} onBack={goBack} />}
       {screen === 5 && <Quiz onNext={goNext} onBack={goBack} />}
-      {screen === 6 && <Complete onRestart={restart} />}
+      {screen === 6 && <Complete onRestart={restart} onConnectors={() => setScreen(7)} />}
+      {screen === 7 && <ConnectorsGuide onBack={() => setScreen(6)} />}
     </div>
   );
 }
