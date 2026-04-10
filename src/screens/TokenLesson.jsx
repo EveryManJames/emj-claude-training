@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const TOKEN_COLORS = [
   'bg-red-200 text-red-900',
   'bg-amber-200 text-amber-900',
@@ -28,6 +26,10 @@ function tokenize(text) {
   return tokens;
 }
 
+const TALE_TEXT = "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way.";
+
+const TALE_TOKENS = tokenize(TALE_TEXT);
+
 const REAL_WORLD_DATA = [
   { label: 'Your prompt', description: '"Write a product description for Cedar Body Wash"', tokens: 30, color: '#79dbd4' },
   { label: "Claude's reply", description: '60-word product description', tokens: 220, color: '#79dbd4' },
@@ -37,18 +39,8 @@ const REAL_WORLD_DATA = [
   { label: 'Drive scan: 20 docs', description: '"Find anything about our 2023 campaign"', tokens: 70000, color: '#884933' },
 ];
 
-const EXAMPLES = [
-  { label: "A simple question", text: "What scent is the cedar body wash?" },
-  { label: "A product description request", text: "Write a 50-word product description for EMJ 2-in-1 Shampoo + Conditioner. Tone: clean, masculine, natural." },
-  { label: "A rambling ask (costs more!)", text: "Hey Claude, hope you're having a great day! I was wondering if maybe you could possibly help me write something about our new shampoo when you get a chance? It's really fresh smelling and I think people would love it." },
-];
-
 export default function TokenLesson({ onNext, onBack }) {
-  const [inputText, setInputText] = useState(EXAMPLES[0].text);
-  const [activeExample, setActiveExample] = useState(0);
-
-  const tokens = tokenize(inputText);
-  const tokenCount = tokens.length;
+  const tokenCount = TALE_TOKENS.length;
   const costApprox = (tokenCount * 0.000003).toFixed(5);
 
   return (
@@ -92,46 +84,15 @@ export default function TokenLesson({ onNext, onBack }) {
         </div>
 
         <div style={{ background: 'white', borderRadius: 6, border: '1px solid rgba(37,55,70,0.09)', marginBottom: 20 }}>
-          <div style={{ padding: '18px 18px 14px' }}>
-            <p style={{ fontWeight: 700, color: '#253746', fontSize: 13.5, marginBottom: 12 }}>Try it — type anything below 👇</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
-              {EXAMPLES.map((ex, i) => (
-                <button
-                  key={i}
-                  onClick={() => { setInputText(ex.text); setActiveExample(i); }}
-                  style={{
-                    padding: '6px 12px', borderRadius: 4, fontSize: 12, fontWeight: 600,
-                    cursor: 'pointer', transition: 'all 0.15s',
-                    backgroundColor: activeExample === i ? '#253746' : '#f2e8da',
-                    color: activeExample === i ? '#f2e8da' : '#253746',
-                    border: '1px solid rgba(37,55,70,0.2)',
-                    fontFamily: "'Barlow', sans-serif",
-                  }}
-                >
-                  {ex.label}
-                </button>
-              ))}
-            </div>
-            <textarea
-              style={{
-                width: '100%', borderRadius: 4, padding: '10px 12px', fontSize: 13.5,
-                resize: 'none', outline: 'none', lineHeight: 1.6, boxSizing: 'border-box',
-                backgroundColor: '#f2e8da', color: '#253746',
-                border: '1.5px solid rgba(37,55,70,0.2)', minHeight: 80,
-                fontFamily: "'Barlow', sans-serif",
-              }}
-              value={inputText}
-              onChange={e => { setInputText(e.target.value); setActiveExample(-1); }}
-              placeholder="Type something about EMJ products..."
-            />
-          </div>
-
-          <div style={{ padding: '0 18px 16px' }}>
-            <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(37,55,70,0.4)', marginBottom: 8, fontFamily: "'Barlow Condensed', sans-serif" }}>
-              Tokens highlighted:
+          <div style={{ padding: '16px 18px 14px' }}>
+            <p style={{ fontWeight: 700, color: '#253746', fontSize: 13.5, marginBottom: 4 }}>
+              This is how Claude "reads" the opening of <em>A Tale of Two Cities</em>:
             </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, minHeight: 32 }}>
-              {tokens.map((tok, i) => (
+            <p style={{ fontSize: 12.5, color: 'rgba(37,55,70,0.5)', marginBottom: 14, lineHeight: 1.5 }}>
+              Each colored block is one token — about 4 characters. Even a sentence you know by heart looks like this to Claude.
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+              {TALE_TOKENS.map((tok, i) => (
                 <span
                   key={i}
                   className={`px-1.5 py-0.5 rounded text-xs font-mono ${TOKEN_COLORS[i % TOKEN_COLORS.length]}`}
@@ -139,9 +100,6 @@ export default function TokenLesson({ onNext, onBack }) {
                   {tok}
                 </span>
               ))}
-              {tokens.length === 0 && (
-                <span style={{ fontSize: 13, fontStyle: 'italic', color: 'rgba(37,55,70,0.35)' }}>Start typing to see tokens...</span>
-              )}
             </div>
           </div>
 
