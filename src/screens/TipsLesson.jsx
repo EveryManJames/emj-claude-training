@@ -2,83 +2,83 @@ import { useState } from 'react';
 
 const TIPS = [
   {
-    id: 'specific',
-    icon: '🎯',
-    title: 'Be Specific Upfront',
+    id: 'context',
+    icon: '🗺️',
+    title: 'Set the Scene First',
     color: '#79dbd4',
     bad: {
-      label: '❌ Vague Prompt',
-      text: "Hey Claude, I hope you're doing well today! I was wondering, when you have a moment, if you could help me write something about one of our products? It's a shampoo and it's really good. Maybe you could write a description or something like that? Thanks so much!",
-      note: '~50 tokens just to ask. Claude still has to guess format, length, tone, and product.'
+      label: '❌ No Context',
+      text: 'Write a product description.',
+      note: "Claude doesn't know your brand, your audience, or what \"good\" looks like to you. You'll get something generic."
     },
     good: {
-      label: '✅ Specific Prompt',
-      text: 'Write a 60-word product description for EMJ 2-in-1 Shampoo + Conditioner. Tone: clean, masculine, outdoorsy. Highlight: natural ingredients, fresh scent.',
-      note: '~30 tokens. Claude knows exactly what to do — less back-and-forth needed.'
+      label: '✅ Context Included',
+      text: "I work at Every Man Jack, a men's grooming brand. Our audience is guys 25–45 who care about natural ingredients. Write a 50-word product description for our new Sandalwood Face Wash. Tone: clean, confident, no-frills.",
+      note: 'Claude now knows who you are, who you\'re writing for, and what "good" means. The output will actually be usable.'
     }
   },
   {
     id: 'format',
     icon: '📐',
-    title: 'Specify the Format',
+    title: 'Say Exactly What You Want Back',
     color: '#ffc56e',
     bad: {
-      label: '❌ No Format Guidance',
-      text: 'Tell me about our top-selling products.',
-      note: "Claude might write 800 words when you only needed 3 bullet points."
+      label: '❌ Vague Output Request',
+      text: 'Can you help me with our spring email campaign?',
+      note: 'Claude might write a full strategy document when you just needed a subject line. Be explicit.'
     },
     good: {
       label: '✅ Format Specified',
-      text: 'List our top 3 best-selling product categories in 3 bullet points, one sentence each. No intro or conclusion.',
-      note: 'Short, tight output = fewer tokens used, faster answer, easier to read.'
+      text: 'Write 5 subject line options for our spring email campaign. Each should be under 8 words. Tone: playful but not cheesy. Focus on our new Cedar + Citrus scent.',
+      note: 'You told Claude: what to make, how many, how long, the tone, and the focus. Now Claude can nail it on the first try.'
     }
   },
   {
-    id: 'reuse',
-    icon: '♻️',
-    title: 'Reuse Prompts, Don\'t Repeat Context',
+    id: 'role',
+    icon: '🎭',
+    title: 'Give Claude a Role',
     color: '#884933',
     bad: {
-      label: '❌ Repeating context every time',
-      text: "I work at Every Man Jack, a men's grooming brand. We sell body wash, shampoo, deodorant, and skincare. Our audience is men 25-45 who care about natural ingredients. Now write a subject line for our spring email campaign.",
-      note: "You're paying tokens to re-explain EMJ every single time."
+      label: '❌ No Role Given',
+      text: 'Review my email and make it better.',
+      note: "\"Better\" means different things to different people. Claude will guess — and probably guess wrong."
     },
     good: {
-      label: '✅ Use Claude\'s Memory or a Saved Prompt',
-      text: "[Save your company context once in a Project] Write a subject line for our spring email campaign. Focus on the new Cedar + Citrus scent. Playful tone.",
-      note: 'Save your EMJ context once in a Claude Project — Claude remembers it so you don\'t have to repeat it.'
+      label: '✅ Role Assigned',
+      text: "Act as a senior copywriter who specializes in men's lifestyle brands. Review the email below and suggest edits that make it punchier and more direct. Flag anything that sounds too corporate.\n\n[paste your email here]",
+      note: "Giving Claude a role tells it what lens to use. It'll write like someone who actually knows what makes good copy."
     }
   },
   {
-    id: 'tasks',
-    icon: '🔗',
-    title: 'Combine Related Tasks',
+    id: 'example',
+    icon: '💡',
+    title: "Show It What You Like",
     color: '#4e5a31',
     bad: {
-      label: '❌ Three Separate Conversations',
-      text: 'Conversation 1: "Write a subject line for our deodorant launch email."\nConversation 2: "Now write the email body."\nConversation 3: "Now write a follow-up email."',
-      note: 'Three separate chats = three separate context windows filled up with background info.'
+      label: '❌ No Reference Point',
+      text: 'Write a tagline for our Cedar Body Wash. Make it sound cool.',
+      note: '"Cool" is subjective. Claude has no idea what your taste looks like — you\'ll get something that feels off.'
     },
     good: {
-      label: '✅ One Focused Conversation',
-      text: 'Write a 3-part email sequence for launching our new aluminum-free deodorant:\n1. Subject line options (5)\n2. Launch email body (150 words)\n3. Follow-up email (100 words, urgency-focused)',
-      note: 'One conversation handles the full task — context is shared efficiently.'
+      label: '✅ Example Provided',
+      text: "Write a tagline for our Cedar Body Wash. Here's the vibe I want:\n\n- 'Born ready.'\n- 'Nature's grip.'\n- 'Built for the day ahead.'\n\nShort. Punchy. Masculine. Give me 5 options in the same style.",
+      note: "A few examples are worth a thousand adjectives. Claude will match your style far more accurately when it can see what you mean."
     }
   },
   {
-    id: 'files',
-    icon: '📁',
-    title: 'Be Selective About What Claude Reads',
-    color: '#884933',
+    id: 'refine',
+    icon: '🔄',
+    title: "Refine, Don't Restart",
+    color: '#79dbd4',
     bad: {
-      label: '❌ Sending Claude on a File Hunt',
-      text: 'Search my Google Drive for everything related to the 2023 fall campaign and give me a summary.',
-      note: 'Claude may read dozens of documents — tens of thousands of tokens — before writing a single word. A full Drive scan of 20 docs ≈ 70,000 tokens.'
+      label: "❌ Giving Up After One Try",
+      text: '[Claude writes a product description]\nYou: "Hmm, that\'s not quite right."\n[You close the chat and start over]',
+      note: "Starting fresh throws away Claude's understanding of your task. You'll just get a different version of the same problem."
     },
     good: {
-      label: '✅ You Find It, Claude Thinks About It',
-      text: 'I pulled up the Q3 2023 Fall Campaign Brief from Drive. Here\'s the relevant section:\n\n"[paste the 2–3 paragraphs that actually matter]"\n\nSummarize the main campaign goals in 3 bullet points.',
-      note: 'You do the finding, Claude does the thinking. Pasting a relevant excerpt instead of triggering a file search can save 50× or more tokens.'
+      label: '✅ Specific Follow-Up',
+      text: "[Claude writes a product description]\nYou: \"Good start. Make it shorter — 30 words max. The tone is too formal; our brand is more casual and direct. Also, lead with the scent, not the brand name.\"",
+      note: "Claude gets better with feedback in the same conversation. Tell it *specifically* what to change — it will apply every note at once."
     }
   }
 ];
@@ -108,10 +108,10 @@ export default function TipsLesson({ onNext, onBack }) {
             color: '#253746', fontSize: 28, fontWeight: 900, lineHeight: 1.05,
             letterSpacing: '-0.5px', marginBottom: 8,
           }}>
-            5 Tips to Use Claude Smarter 💡
+            How to Write a Good Prompt 💡
           </h2>
           <p style={{ color: 'rgba(37,55,70,0.7)', fontSize: 14.5, lineHeight: 1.65 }}>
-            Compare the "meh" approach vs. the smart approach. Tap each card to flip between them.
+            The quality of Claude's answer depends almost entirely on how you ask. Compare the "meh" approach with the one that actually works — tap each card to flip between them.
           </p>
         </div>
 
@@ -163,17 +163,17 @@ export default function TipsLesson({ onNext, onBack }) {
         </div>
 
         <div style={{ backgroundColor: '#253746', color: '#f2e8da', borderRadius: 6, padding: '16px 18px', marginBottom: 28 }}>
-          <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, color: '#ffc56e', marginBottom: 12 }}>⚡ Quick Cheat Sheet</p>
+          <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, color: '#ffc56e', marginBottom: 12 }}>⚡ Prompting Quick Reference</p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             {[
-              { do: true, text: 'Be specific about length, tone & format' },
-              { do: false, text: 'Write "Hey Claude, hope you\'re well..."' },
-              { do: true, text: 'Start fresh chats for new topics' },
-              { do: false, text: 'Paste entire email threads unnecessarily' },
-              { do: true, text: 'Save context once in a Claude Project' },
-              { do: false, text: 'Re-explain EMJ in every single message' },
-              { do: true, text: 'Batch related tasks in one conversation' },
-              { do: false, text: 'Upload files you don\'t actually need' },
+              { do: true,  text: 'Include who you are and who the output is for' },
+              { do: false, text: 'Assume Claude already knows your brand or context' },
+              { do: true,  text: 'Specify length, format, and tone upfront' },
+              { do: false, text: 'Use vague words like "good", "cool", or "better"' },
+              { do: true,  text: 'Give Claude a role ("Act as a copywriter...")' },
+              { do: false, text: 'Start over when the first answer is close but not right' },
+              { do: true,  text: 'Show an example of the style you want' },
+              { do: false, text: 'Ask for everything at once with no structure' },
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
                 <span style={{ flexShrink: 0 }}>{item.do ? '✅' : '❌'}</span>
