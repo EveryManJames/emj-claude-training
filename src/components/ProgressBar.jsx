@@ -1,34 +1,64 @@
-export default function ProgressBar({ current, total }) {
-  const pct = Math.round((current / total) * 100);
-  const steps = ["Intro", "Tokens", "Context", "Tips", "Quiz", "Done"];
+export default function ProgressBar({ current }) {
+  const STEPS = ['Tokens', 'Context', 'Tips', 'Models', 'Quiz'];
 
   return (
-    <div className="w-full px-6 py-4" style={{ backgroundColor: '#253746' }}>
-      <div className="max-w-2xl mx-auto">
-        <div className="flex justify-between items-center mb-2">
-          {steps.map((label, i) => (
-            <div key={i} className="flex flex-col items-center gap-1">
+    <div style={{ backgroundColor: '#253746', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      <div style={{ maxWidth: 672, margin: '0 auto', padding: '10px 24px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', position: 'relative' }}>
+          {STEPS.map((label, i) => {
+            const stepNum = i + 1;
+            const done = stepNum < current;
+            const active = stepNum === current;
+
+            return (
               <div
-                className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300"
-                style={{
-                  backgroundColor: i < current ? '#79dbd4' : i === current ? '#ffc56e' : 'rgba(255,255,255,0.15)',
-                  color: i <= current ? '#253746' : 'rgba(255,255,255,0.4)',
-                  border: i === current ? '2px solid #ffc56e' : '2px solid transparent'
-                }}
+                key={i}
+                style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}
               >
-                {i < current ? '✓' : i + 1}
+                {i > 0 && (
+                  <div style={{
+                    position: 'absolute', top: 9, right: '50%', left: 0, height: 2,
+                    backgroundColor: done || active ? '#79dbd4' : 'rgba(255,255,255,0.08)',
+                    transition: 'background-color 0.4s ease',
+                  }} />
+                )}
+                {i < STEPS.length - 1 && (
+                  <div style={{
+                    position: 'absolute', top: 9, left: '50%', right: 0, height: 2,
+                    backgroundColor: done ? '#79dbd4' : 'rgba(255,255,255,0.08)',
+                    transition: 'background-color 0.4s ease',
+                  }} />
+                )}
+                <div style={{
+                  width: 18, height: 18, borderRadius: '50%', zIndex: 1, position: 'relative',
+                  backgroundColor: done ? '#79dbd4' : active ? '#ffc56e' : 'rgba(255,255,255,0.06)',
+                  border: `2px solid ${done ? '#79dbd4' : active ? '#ffc56e' : 'rgba(255,255,255,0.12)'}`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 8,
+                  color: done || active ? '#253746' : 'rgba(255,255,255,0.25)',
+                  transition: 'all 0.35s ease',
+                  flexShrink: 0,
+                }}>
+                  {done ? '✓' : stepNum}
+                </div>
+                <span style={{
+                  display: 'none',
+                  ...(typeof window !== 'undefined' && window.innerWidth >= 480 ? { display: 'block' } : {}),
+                }} className="hidden sm:block">
+                  <span style={{
+                    marginTop: 4, fontSize: 7.5, fontWeight: 700, display: 'block',
+                    fontFamily: "'Barlow Condensed', sans-serif",
+                    letterSpacing: '0.09em', textTransform: 'uppercase',
+                    color: done || active ? 'rgba(242,232,218,0.75)' : 'rgba(242,232,218,0.18)',
+                    transition: 'color 0.35s ease',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {label}
+                  </span>
+                </span>
               </div>
-              <span className="text-xs hidden sm:block" style={{ color: i <= current ? '#f2e8da' : 'rgba(242,232,218,0.4)' }}>
-                {label}
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className="w-full rounded-full h-1.5 mt-1" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
-          <div
-            className="h-1.5 rounded-full transition-all duration-500"
-            style={{ width: `${pct}%`, backgroundColor: '#79dbd4' }}
-          />
+            );
+          })}
         </div>
       </div>
     </div>

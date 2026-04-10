@@ -91,42 +91,49 @@ export default function TipsLesson({ onNext, onBack }) {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#f2e8da' }}>
-      <div className="max-w-2xl mx-auto px-4 py-10">
+    <div style={{ minHeight: '100vh', backgroundColor: '#f2e8da' }}>
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '32px 20px 48px' }}>
 
-        <div className="mb-8">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-3"
-            style={{ backgroundColor: '#884933', color: '#f2e8da' }}>
+        <div style={{ marginBottom: 28 }}>
+          <span style={{
+            display: 'inline-block', fontSize: 10, fontWeight: 800, letterSpacing: '0.12em',
+            textTransform: 'uppercase', color: '#f2e8da', backgroundColor: '#884933',
+            padding: '3px 10px', borderRadius: 2, marginBottom: 12,
+            fontFamily: "'Barlow Condensed', sans-serif",
+          }}>
             Lesson 3 of 4
           </span>
-          <h2 className="text-3xl font-black mb-2" style={{ color: '#253746' }}>
+          <h2 style={{
+            fontFamily: "'Barlow Condensed', sans-serif",
+            color: '#253746', fontSize: 28, fontWeight: 900, lineHeight: 1.05,
+            letterSpacing: '-0.5px', marginBottom: 8,
+          }}>
             5 Tips to Use Claude Smarter 💡
           </h2>
-          <p style={{ color: '#253746', opacity: 0.75 }}>
+          <p style={{ color: 'rgba(37,55,70,0.7)', fontSize: 14.5, lineHeight: 1.65 }}>
             Compare the "meh" approach vs. the smart approach. Tap each card to flip between them.
           </p>
         </div>
 
-        <div className="space-y-5 mb-8">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
           {TIPS.map((tip, i) => (
-            <div key={tip.id} className="rounded" style={{ backgroundColor: 'white', border: '1px solid rgba(37,55,70,0.1)' }}>
-              {/* Card header */}
-              <div className="px-5 py-4 flex items-center gap-3" style={{ backgroundColor: tip.color, borderRadius: '4px 4px 0 0' }}>
-                <span className="text-2xl">{tip.icon}</span>
-                <span className="font-black text-lg" style={{ color: '#253746' }}>{tip.title}</span>
+            <div key={tip.id} style={{ background: 'white', borderRadius: 6, border: '1px solid rgba(37,55,70,0.09)' }}>
+              <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, backgroundColor: tip.color, borderRadius: '6px 6px 0 0' }}>
+                <span style={{ fontSize: 20 }}>{tip.icon}</span>
+                <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 900, fontSize: 16, color: '#253746' }}>{tip.title}</span>
               </div>
 
-              {/* Toggle */}
-              <div className="flex border-b" style={{ borderColor: '#e8ddd0' }}>
+              <div style={{ display: 'flex', borderBottom: '1px solid rgba(37,55,70,0.07)' }}>
                 {['bad', 'good'].map(tab => (
                   <button
                     key={tab}
                     onClick={() => setTab(i, tab)}
-                    className="flex-1 py-2 text-sm font-semibold transition-all"
                     style={{
+                      flex: 1, padding: '9px 12px', fontSize: 12.5, fontWeight: 700,
+                      cursor: 'pointer', border: 'none', transition: 'all 0.15s',
+                      fontFamily: "'Barlow', sans-serif",
                       backgroundColor: activeTab[i] === tab ? (tab === 'good' ? '#253746' : '#884933') : 'transparent',
-                      color: activeTab[i] === tab ? '#f2e8da' : '#253746',
-                      opacity: activeTab[i] === tab ? 1 : 0.5,
+                      color: activeTab[i] === tab ? '#f2e8da' : 'rgba(37,55,70,0.45)',
                     }}
                   >
                     {tab === 'bad' ? tip.bad.label : tip.good.label}
@@ -134,19 +141,20 @@ export default function TipsLesson({ onNext, onBack }) {
                 ))}
               </div>
 
-              {/* Content */}
-              <div className="p-5">
-                <div
-                  className="rounded-xl p-4 mb-3 text-sm font-mono whitespace-pre-wrap leading-relaxed"
-                  style={{
-                    backgroundColor: '#f2e8da',
-                    color: '#253746',
-                    border: `1.5px solid ${activeTab[i] === 'good' ? '#79dbd4' : '#884933'}`,
-                  }}
-                >
+              <div style={{ padding: '14px 16px' }}>
+                <div style={{
+                  borderRadius: 4, padding: '12px 14px', marginBottom: 10,
+                  fontSize: 13, fontFamily: "'JetBrains Mono', monospace",
+                  whiteSpace: 'pre-wrap', lineHeight: 1.65,
+                  backgroundColor: '#f2e8da', color: '#253746',
+                  border: `1.5px solid ${activeTab[i] === 'good' ? '#79dbd4' : '#884933'}`,
+                }}>
                   {activeTab[i] === 'bad' ? tip.bad.text : tip.good.text}
                 </div>
-                <p className="text-sm" style={{ color: activeTab[i] === 'good' ? '#4e5a31' : '#884933', fontWeight: 600 }}>
+                <p style={{
+                  fontSize: 12.5, fontWeight: 600, lineHeight: 1.55,
+                  color: activeTab[i] === 'good' ? '#4e5a31' : '#884933',
+                }}>
                   {activeTab[i] === 'bad' ? `⚠️ ${tip.bad.note}` : `✅ ${tip.good.note}`}
                 </p>
               </div>
@@ -154,10 +162,9 @@ export default function TipsLesson({ onNext, onBack }) {
           ))}
         </div>
 
-        {/* Cheat sheet */}
-        <div className="rounded p-5 mb-8" style={{ backgroundColor: '#253746', color: '#f2e8da' }}>
-          <p className="font-black mb-3" style={{ color: '#ffc56e' }}>⚡ Quick Cheat Sheet</p>
-          <div className="grid grid-cols-2 gap-3">
+        <div style={{ backgroundColor: '#253746', color: '#f2e8da', borderRadius: 6, padding: '16px 18px', marginBottom: 28 }}>
+          <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, color: '#ffc56e', marginBottom: 12 }}>⚡ Quick Cheat Sheet</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             {[
               { do: true, text: 'Be specific about length, tone & format' },
               { do: false, text: 'Write "Hey Claude, hope you\'re well..."' },
@@ -168,24 +175,36 @@ export default function TipsLesson({ onNext, onBack }) {
               { do: true, text: 'Batch related tasks in one conversation' },
               { do: false, text: 'Upload files you don\'t actually need' },
             ].map((item, i) => (
-              <div key={i} className="flex gap-2 items-start text-sm">
-                <span>{item.do ? '✅' : '❌'}</span>
-                <span style={{ opacity: 0.85 }}>{item.text}</span>
+              <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                <span style={{ flexShrink: 0 }}>{item.do ? '✅' : '❌'}</span>
+                <span style={{ fontSize: 13, opacity: 0.82, lineHeight: 1.5 }}>{item.text}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="flex gap-3">
-          <button onClick={onBack}
-            className="px-6 py-3 rounded-full font-bold border-2 transition-all hover:scale-105"
-            style={{ borderColor: '#253746', color: '#253746' }}>
-            ← Back
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button
+            onClick={onBack}
+            className="transition-all hover:opacity-80 active:scale-95"
+            style={{
+              padding: '11px 20px', borderRadius: 4, cursor: 'pointer',
+              fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, letterSpacing: '0.06em',
+              backgroundColor: 'transparent', color: '#253746', border: '2px solid rgba(37,55,70,0.2)',
+            }}
+          >
+            ← BACK
           </button>
-          <button onClick={onNext}
-            className="flex-1 py-3 rounded-full font-bold transition-all hover:scale-105 active:scale-95"
-            style={{ backgroundColor: '#253746', color: '#f2e8da' }}>
-            Next: Quick Quiz →
+          <button
+            onClick={onNext}
+            className="transition-all hover:opacity-90 active:scale-95"
+            style={{
+              flex: 1, padding: '11px 20px', borderRadius: 4, border: 'none', cursor: 'pointer',
+              fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, letterSpacing: '0.06em',
+              backgroundColor: '#253746', color: '#f2e8da',
+            }}
+          >
+            NEXT: CHOOSING A MODEL →
           </button>
         </div>
       </div>

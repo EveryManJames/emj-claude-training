@@ -11,16 +11,13 @@ const TOKEN_COLORS = [
   'bg-pink-200 text-pink-900',
 ];
 
-// Rough tokenizer: split on word/punctuation boundaries, ~3-5 chars per token
 function tokenize(text) {
   if (!text.trim()) return [];
-  // Split into words and punctuation
   const chunks = text.match(/[\w']+|[^\w\s]+|\s+/g) || [];
   const tokens = [];
   let buffer = '';
   for (const chunk of chunks) {
     buffer += chunk;
-    // Roughly break at 4 chars of non-whitespace content
     const nonSpace = buffer.replace(/\s/g, '');
     if (nonSpace.length >= 4) {
       tokens.push(buffer);
@@ -32,57 +29,18 @@ function tokenize(text) {
 }
 
 const REAL_WORLD_DATA = [
-  {
-    label: 'Your prompt',
-    description: '"Write a product description for Cedar Body Wash"',
-    tokens: 30,
-    color: '#79dbd4',
-  },
-  {
-    label: "Claude's reply",
-    description: '60-word product description',
-    tokens: 220,
-    color: '#79dbd4',
-  },
-  {
-    label: '1 typical work email',
-    description: 'A standard email (~250 words)',
-    tokens: 350,
-    color: '#ffc56e',
-  },
-  {
-    label: '1 Google Drive doc',
-    description: '10-page strategy or campaign brief',
-    tokens: 3500,
-    color: '#ffc56e',
-  },
-  {
-    label: 'Gmail search: 50 emails',
-    description: 'Claude reads every matching result to find what you need',
-    tokens: 17500,
-    color: '#884933',
-  },
-  {
-    label: 'Drive scan: 20 docs',
-    description: '"Find anything about our 2023 campaign"',
-    tokens: 70000,
-    color: '#884933',
-  },
+  { label: 'Your prompt', description: '"Write a product description for Cedar Body Wash"', tokens: 30, color: '#79dbd4' },
+  { label: "Claude's reply", description: '60-word product description', tokens: 220, color: '#79dbd4' },
+  { label: '1 typical work email', description: 'A standard email (~250 words)', tokens: 350, color: '#ffc56e' },
+  { label: '1 Google Drive doc', description: '10-page strategy or campaign brief', tokens: 3500, color: '#ffc56e' },
+  { label: 'Gmail search: 50 emails', description: 'Claude reads every matching result to find what you need', tokens: 17500, color: '#884933' },
+  { label: 'Drive scan: 20 docs', description: '"Find anything about our 2023 campaign"', tokens: 70000, color: '#884933' },
 ];
 
 const EXAMPLES = [
-  {
-    label: "A simple question",
-    text: "What scent is the cedar body wash?",
-  },
-  {
-    label: "A product description request",
-    text: "Write a 50-word product description for EMJ 2-in-1 Shampoo + Conditioner. Tone: clean, masculine, natural.",
-  },
-  {
-    label: "A rambling ask (costs more!)",
-    text: "Hey Claude, hope you're having a great day! I was wondering if maybe you could possibly help me write something about our new shampoo when you get a chance? It's really fresh smelling and I think people would love it.",
-  },
+  { label: "A simple question", text: "What scent is the cedar body wash?" },
+  { label: "A product description request", text: "Write a 50-word product description for EMJ 2-in-1 Shampoo + Conditioner. Tone: clean, masculine, natural." },
+  { label: "A rambling ask (costs more!)", text: "Hey Claude, hope you're having a great day! I was wondering if maybe you could possibly help me write something about our new shampoo when you get a chance? It's really fresh smelling and I think people would love it." },
 ];
 
 export default function TokenLesson({ onNext, onBack }) {
@@ -94,49 +52,60 @@ export default function TokenLesson({ onNext, onBack }) {
   const costApprox = (tokenCount * 0.000003).toFixed(5);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#f2e8da' }}>
-      <div className="max-w-2xl mx-auto px-4 py-10">
+    <div style={{ minHeight: '100vh', backgroundColor: '#f2e8da' }}>
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '32px 20px 48px' }}>
 
-        {/* Header */}
-        <div className="mb-8">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-3"
-            style={{ backgroundColor: '#79dbd4', color: '#253746' }}>
+        <div style={{ marginBottom: 28 }}>
+          <span style={{
+            display: 'inline-block', fontSize: 10, fontWeight: 800, letterSpacing: '0.12em',
+            textTransform: 'uppercase', color: '#253746', backgroundColor: '#79dbd4',
+            padding: '3px 10px', borderRadius: 2, marginBottom: 12,
+            fontFamily: "'Barlow Condensed', sans-serif",
+          }}>
             Lesson 1 of 4
           </span>
-          <h2 className="text-3xl font-black mb-2" style={{ color: '#253746' }}>
+          <h2 style={{
+            fontFamily: "'Barlow Condensed', sans-serif",
+            color: '#253746', fontSize: 28, fontWeight: 900, lineHeight: 1.05,
+            letterSpacing: '-0.5px', marginBottom: 8,
+          }}>
             What is a Token? 🔤
           </h2>
-          <p style={{ color: '#253746', opacity: 0.75 }}>
+          <p style={{ color: 'rgba(37,55,70,0.7)', fontSize: 14.5, lineHeight: 1.65 }}>
             Claude doesn't read words the way you do. It reads in tiny chunks called <strong>tokens</strong>.
             Think of a token as about 4 characters — roughly ¾ of a word.
           </p>
         </div>
 
-        {/* Visual analogy */}
-        <div style={{ borderLeft: '3px solid #884933', backgroundColor: 'rgba(136,73,51,0.07)', padding: '14px 16px', marginBottom: 24, borderRadius: '0 4px 4px 0' }}>
-          <p className="font-bold mb-1" style={{ color: '#884933' }}>🧴 The Body Wash Analogy</p>
-          <p style={{ color: '#253746', opacity: 0.8, fontSize: '0.95rem' }}>
+        <div style={{
+          borderLeft: '3px solid #884933', backgroundColor: 'rgba(136,73,51,0.06)',
+          padding: '14px 16px', marginBottom: 20, borderRadius: '0 4px 4px 0',
+        }}>
+          <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, color: '#884933', marginBottom: 5 }}>
+            🧴 The Body Wash Analogy
+          </p>
+          <p style={{ color: 'rgba(37,55,70,0.75)', fontSize: 14, lineHeight: 1.65 }}>
             Imagine you're reading the ingredient list on the back of our Cedar + Sage Body Wash —
             but you can only see 4 letters at a time. That's exactly how Claude processes your message.
             Every word costs a tiny bit of your monthly budget.
           </p>
         </div>
 
-        {/* Interactive tokenizer */}
-        <div className="rounded mb-6" style={{ backgroundColor: 'white', border: '1px solid rgba(37,55,70,0.1)' }}>
-          <div className="px-5 pt-5 pb-3">
-            <p className="font-bold mb-3" style={{ color: '#253746' }}>Try it — type anything below 👇</p>
-            {/* Quick examples */}
-            <div className="flex flex-wrap gap-2 mb-3">
+        <div style={{ background: 'white', borderRadius: 6, border: '1px solid rgba(37,55,70,0.09)', marginBottom: 20 }}>
+          <div style={{ padding: '18px 18px 14px' }}>
+            <p style={{ fontWeight: 700, color: '#253746', fontSize: 13.5, marginBottom: 12 }}>Try it — type anything below 👇</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
               {EXAMPLES.map((ex, i) => (
                 <button
                   key={i}
                   onClick={() => { setInputText(ex.text); setActiveExample(i); }}
-                  className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
                   style={{
+                    padding: '6px 12px', borderRadius: 4, fontSize: 12, fontWeight: 600,
+                    cursor: 'pointer', transition: 'all 0.15s',
                     backgroundColor: activeExample === i ? '#253746' : '#f2e8da',
                     color: activeExample === i ? '#f2e8da' : '#253746',
-                    border: '1px solid #253746',
+                    border: '1px solid rgba(37,55,70,0.2)',
+                    fontFamily: "'Barlow', sans-serif",
                   }}
                 >
                   {ex.label}
@@ -144,20 +113,24 @@ export default function TokenLesson({ onNext, onBack }) {
               ))}
             </div>
             <textarea
-              className="w-full rounded-xl p-3 text-sm resize-none outline-none"
-              style={{ backgroundColor: '#f2e8da', color: '#253746', border: '1.5px solid #253746', minHeight: 80 }}
+              style={{
+                width: '100%', borderRadius: 4, padding: '10px 12px', fontSize: 13.5,
+                resize: 'none', outline: 'none', lineHeight: 1.6, boxSizing: 'border-box',
+                backgroundColor: '#f2e8da', color: '#253746',
+                border: '1.5px solid rgba(37,55,70,0.2)', minHeight: 80,
+                fontFamily: "'Barlow', sans-serif",
+              }}
               value={inputText}
               onChange={e => { setInputText(e.target.value); setActiveExample(-1); }}
               placeholder="Type something about EMJ products..."
             />
           </div>
 
-          {/* Token visualization */}
-          <div className="px-5 pb-4">
-            <p className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'rgba(37,55,70,0.5)' }}>
+          <div style={{ padding: '0 18px 16px' }}>
+            <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(37,55,70,0.4)', marginBottom: 8, fontFamily: "'Barlow Condensed', sans-serif" }}>
               Tokens highlighted:
             </p>
-            <div className="flex flex-wrap gap-1 min-h-10">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, minHeight: 32 }}>
               {tokens.map((tok, i) => (
                 <span
                   key={i}
@@ -167,62 +140,59 @@ export default function TokenLesson({ onNext, onBack }) {
                 </span>
               ))}
               {tokens.length === 0 && (
-                <span className="text-sm italic" style={{ color: 'rgba(37,55,70,0.4)' }}>Start typing to see tokens...</span>
+                <span style={{ fontSize: 13, fontStyle: 'italic', color: 'rgba(37,55,70,0.35)' }}>Start typing to see tokens...</span>
               )}
             </div>
           </div>
 
-          {/* Counter */}
-          <div className="px-5 py-4 flex gap-4 flex-wrap" style={{ backgroundColor: '#253746', borderRadius: '0 0 4px 4px' }}>
-            <div className="text-center">
-              <div className="text-2xl font-black" style={{ color: '#ffc56e' }}>{tokenCount}</div>
-              <div className="text-xs" style={{ color: 'rgba(242,232,218,0.6)' }}>tokens</div>
+          <div style={{ padding: '14px 18px', display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'center', backgroundColor: '#253746', borderRadius: '0 0 6px 6px' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 24, fontWeight: 900, color: '#ffc56e', lineHeight: 1 }}>{tokenCount}</div>
+              <div style={{ fontSize: 10, color: 'rgba(242,232,218,0.5)', marginTop: 2, letterSpacing: '0.04em', fontFamily: "'Barlow Condensed', sans-serif" }}>tokens</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-black" style={{ color: '#79dbd4' }}>${costApprox}</div>
-              <div className="text-xs" style={{ color: 'rgba(242,232,218,0.6)' }}>approx. cost</div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 24, fontWeight: 900, color: '#79dbd4', lineHeight: 1 }}>${costApprox}</div>
+              <div style={{ fontSize: 10, color: 'rgba(242,232,218,0.5)', marginTop: 2, letterSpacing: '0.04em', fontFamily: "'Barlow Condensed', sans-serif" }}>approx. cost</div>
             </div>
-            <div className="flex-1 flex items-center">
-              <p className="text-xs" style={{ color: 'rgba(242,232,218,0.6)' }}>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: 12, color: 'rgba(242,232,218,0.55)', lineHeight: 1.55 }}>
                 Claude Enterprise gives us a monthly token budget shared across all ~70 team members. Every message counts!
               </p>
             </div>
           </div>
         </div>
 
-        {/* Real-World Scale */}
-        <div className="rounded mb-6" style={{ backgroundColor: 'white', border: '1px solid rgba(37,55,70,0.1)' }}>
-          <div className="px-5 py-4 border-b" style={{ borderColor: '#e8ddd0' }}>
-            <p className="font-bold" style={{ color: '#253746' }}>📊 Your prompt is just the tip of the iceberg</p>
-            <p className="text-sm mt-1" style={{ color: 'rgba(37,55,70,0.65)' }}>
+        <div style={{ background: 'white', borderRadius: 6, border: '1px solid rgba(37,55,70,0.09)', marginBottom: 20 }}>
+          <div style={{ padding: '16px 18px 14px', borderBottom: '1px solid rgba(37,55,70,0.07)' }}>
+            <p style={{ fontWeight: 700, color: '#253746', fontSize: 14, marginBottom: 4 }}>📊 Your prompt is just the tip of the iceberg</p>
+            <p style={{ fontSize: 13, color: 'rgba(37,55,70,0.6)', lineHeight: 1.6 }}>
               The real token cost happens when Claude has to <em>read through your files</em> — emails, documents, entire Drive folders.
               Your prompt is a rounding error compared to that.
             </p>
           </div>
-          <div className="px-5 py-5">
+          <div style={{ padding: '16px 18px' }}>
             {REAL_WORLD_DATA.map((item, i) => (
-              <div key={i} className="mb-4 last:mb-0">
-                <div className="flex justify-between items-baseline mb-0.5">
-                  <span className="text-sm font-semibold" style={{ color: '#253746' }}>{item.label}</span>
-                  <span className="text-xs font-mono font-bold" style={{ color: item.color }}>
+              <div key={i} style={{ marginBottom: i < REAL_WORLD_DATA.length - 1 ? 14 : 0 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2 }}>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: '#253746' }}>{item.label}</span>
+                  <span style={{ fontSize: 11.5, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, color: item.color }}>
                     ~{item.tokens.toLocaleString()} tokens
                   </span>
                 </div>
-                <p className="text-xs mb-1.5" style={{ color: 'rgba(37,55,70,0.5)' }}>{item.description}</p>
-                <div className="w-full rounded-full h-2" style={{ backgroundColor: '#f2e8da' }}>
-                  <div
-                    className="h-2 rounded-full"
-                    style={{
-                      width: `${Math.min(100, Math.max(3, (Math.log10(item.tokens) / Math.log10(70000)) * 100))}%`,
-                      backgroundColor: item.color,
-                    }}
-                  />
+                <p style={{ fontSize: 11.5, color: 'rgba(37,55,70,0.45)', marginBottom: 6 }}>{item.description}</p>
+                <div style={{ width: '100%', borderRadius: 3, height: 6, backgroundColor: '#f2e8da' }}>
+                  <div style={{
+                    height: 6, borderRadius: 3,
+                    width: `${Math.min(100, Math.max(3, (Math.log10(item.tokens) / Math.log10(70000)) * 100))}%`,
+                    backgroundColor: item.color,
+                    transition: 'width 0.3s ease',
+                  }} />
                 </div>
               </div>
             ))}
           </div>
-          <div className="px-5 py-4" style={{ backgroundColor: '#884933', borderRadius: '0 0 4px 4px' }}>
-            <p className="text-sm font-bold" style={{ color: '#f2e8da' }}>
+          <div style={{ padding: '12px 18px', backgroundColor: '#884933', borderRadius: '0 0 6px 6px' }}>
+            <p style={{ fontSize: 13, fontWeight: 600, color: '#f2e8da', lineHeight: 1.55 }}>
               ⚠️ Asking Claude to search 50 Gmail threads costs{' '}
               <span style={{ color: '#ffc56e' }}>~580× more tokens than your prompt</span>
               {' '}— before it writes a single word back to you.
@@ -230,25 +200,39 @@ export default function TokenLesson({ onNext, onBack }) {
           </div>
         </div>
 
-        {/* Key takeaway */}
-        <div style={{ backgroundColor: '#4e5a31', color: '#f2e8da', padding: '14px 16px', marginBottom: 32, borderLeft: '3px solid #79dbd4', borderRadius: '0 4px 4px 0' }}>
-          <p className="font-bold mb-1">💡 Key Takeaway</p>
-          <p style={{ opacity: 0.9 }}>
+        <div style={{
+          backgroundColor: '#4e5a31', color: '#f2e8da',
+          padding: '14px 16px', marginBottom: 28, borderLeft: '3px solid #79dbd4',
+          borderRadius: '0 6px 6px 0',
+        }}>
+          <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, marginBottom: 5 }}>💡 Key Takeaway</p>
+          <p style={{ opacity: 0.88, fontSize: 14, lineHeight: 1.65 }}>
             Both your message <em>and</em> Claude's reply cost tokens — but the biggest hidden cost is what Claude has to <em>read</em>. Don't send Claude on a file hunt when you can paste the relevant piece yourself.
           </p>
         </div>
 
-        {/* Nav */}
-        <div className="flex gap-3">
-          <button onClick={onBack}
-            className="px-6 py-3 rounded-full font-bold border-2 transition-all hover:scale-105"
-            style={{ borderColor: '#253746', color: '#253746' }}>
-            ← Back
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button
+            onClick={onBack}
+            className="transition-all hover:opacity-80 active:scale-95"
+            style={{
+              padding: '11px 20px', borderRadius: 4, cursor: 'pointer',
+              fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, letterSpacing: '0.06em',
+              backgroundColor: 'transparent', color: '#253746', border: '2px solid rgba(37,55,70,0.2)',
+            }}
+          >
+            ← BACK
           </button>
-          <button onClick={onNext}
-            className="flex-1 py-3 rounded-full font-bold transition-all hover:scale-105 active:scale-95"
-            style={{ backgroundColor: '#253746', color: '#f2e8da' }}>
-            Next: The Context Window →
+          <button
+            onClick={onNext}
+            className="transition-all hover:opacity-90 active:scale-95"
+            style={{
+              flex: 1, padding: '11px 20px', borderRadius: 4, border: 'none', cursor: 'pointer',
+              fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 14, letterSpacing: '0.06em',
+              backgroundColor: '#253746', color: '#f2e8da',
+            }}
+          >
+            NEXT: THE CONTEXT WINDOW →
           </button>
         </div>
       </div>

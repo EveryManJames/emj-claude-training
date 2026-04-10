@@ -24,31 +24,24 @@ body {
   font-family: 'Barlow Condensed', Impact, sans-serif;
 }
 
-.prompt-text {
+.mono {
   font-family: 'JetBrains Mono', 'Cascadia Code', 'Fira Mono', monospace;
   font-size: 0.8rem;
   line-height: 1.6;
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: break-word;
-  max-width: 100%;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.fade-up { animation: fadeUp 0.52s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.fade-up { animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .delay-1  { animation-delay: 0.07s; }
 .delay-2  { animation-delay: 0.14s; }
 .delay-3  { animation-delay: 0.21s; }
 .delay-4  { animation-delay: 0.28s; }
 .delay-5  { animation-delay: 0.35s; }
 .delay-6  { animation-delay: 0.42s; }
-
-.card {
-  background: white;
-  border-radius: 4px;
-  border: 1px solid rgba(37,55,70,0.1);
-}

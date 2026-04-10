@@ -4,10 +4,11 @@ import Welcome from './screens/Welcome.jsx';
 import TokenLesson from './screens/TokenLesson.jsx';
 import ContextLesson from './screens/ContextLesson.jsx';
 import TipsLesson from './screens/TipsLesson.jsx';
+import ModelsLesson from './screens/ModelsLesson.jsx';
 import Quiz from './screens/Quiz.jsx';
 import Complete from './screens/Complete.jsx';
 
-const TOTAL_SCREENS = 6;
+const TOTAL_SCREENS = 7;
 
 export default function App() {
   const [screen, setScreen] = useState(0);
@@ -26,8 +27,9 @@ export default function App() {
       {screen === 1 && <TokenLesson onNext={goNext} onBack={goBack} />}
       {screen === 2 && <ContextLesson onNext={goNext} onBack={goBack} />}
       {screen === 3 && <TipsLesson onNext={goNext} onBack={goBack} />}
-      {screen === 4 && <Quiz onNext={goNext} onBack={goBack} />}
-      {screen === 5 && <Complete onRestart={restart} />}
+      {screen === 4 && <ModelsLesson onNext={goNext} onBack={goBack} />}
+      {screen === 5 && <Quiz onNext={goNext} onBack={goBack} />}
+      {screen === 6 && <Complete onRestart={restart} />}
     </div>
   );
 }
