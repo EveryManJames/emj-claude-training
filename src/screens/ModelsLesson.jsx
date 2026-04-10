@@ -2,7 +2,7 @@ const MODELS = [
   {
     name: 'HAIKU',
     emoji: '🐦',
-    tagline: 'Fast & lean — for simple, repetitive tasks',
+    tagline: 'Fast & affordable — great for quick, everyday tasks',
     cost: '$',
     costLabel: 'Most affordable',
     color: '#79dbd4',
@@ -36,7 +36,7 @@ const MODELS = [
       'Multi-step analysis and research',
       'Answering complex brand or business questions',
     ],
-    note: 'This is what you should reach for every single time. Sonnet handles 99.9% of what EMJ will ever ask of Claude.',
+    note: 'This is what you should reach for most of the time — unless your task is quick and straightforward, in which case Haiku often handles it just as well, faster and cheaper.',
   },
   {
     name: 'OPUS',
@@ -89,7 +89,7 @@ export default function ModelsLesson({ onNext, onBack }) {
             Choosing the Right Model
           </h2>
           <p style={{ color: 'rgba(37,55,70,0.7)', fontSize: 14.5, lineHeight: 1.65 }}>
-            Claude comes in three tiers — Haiku, Sonnet, and Opus. They're not interchangeable. Each has a distinct capability level and a very different price tag.
+            Claude comes in three tiers — Haiku, Sonnet, and Opus. Each has a different capability level and price tag. Knowing when to use each one is how you get the most out of your team's budget.
           </p>
         </div>
 
@@ -202,7 +202,7 @@ export default function ModelsLesson({ onNext, onBack }) {
               🚀 The punchline
             </p>
             <p style={{ color: 'rgba(242,232,218,0.85)', fontSize: 13, lineHeight: 1.55 }}>
-              If your task is writing a product description, drafting a campaign brief, or summarizing a report — you don't need Opus. <strong style={{ color: '#f2e8da' }}>Using Opus for everyday EMJ work is like renting a rocket ship to drive to the grocery store.</strong> Sonnet does it better, faster, and at a fraction of the cost.
+              If your task is writing a product description, drafting a campaign brief, or summarizing a report — you don't need Opus. <strong style={{ color: '#f2e8da' }}>Using Opus for everyday EMJ work is like renting a rocket ship to drive to the grocery store.</strong> Haiku or Sonnet will do it better, faster, and at a fraction of the cost.
             </p>
           </div>
         </div>
@@ -215,7 +215,7 @@ export default function ModelsLesson({ onNext, onBack }) {
             ✅ The EMJ Rule
           </p>
           <p style={{ color: 'rgba(242,232,218,0.88)', fontSize: 14, lineHeight: 1.65 }}>
-            Default to <strong style={{ color: '#ffc56e' }}>Sonnet</strong> for everything. Use <strong style={{ color: '#79dbd4' }}>Haiku</strong> only for simple, repetitive tasks. Treat <strong style={{ color: '#f2e8da' }}>Opus</strong> like a specialist surgeon — brilliant, expensive, and almost certainly not what you need today.
+            <strong style={{ color: '#79dbd4' }}>Haiku</strong> is surprisingly capable — use it for quick, everyday tasks. Reach for <strong style={{ color: '#ffc56e' }}>Sonnet</strong> when you need more depth, better reasoning, or longer outputs. Treat <strong style={{ color: '#f2e8da' }}>Opus</strong> like a specialist surgeon — brilliant, expensive, and almost certainly not what you need today.
           </p>
         </div>
 
